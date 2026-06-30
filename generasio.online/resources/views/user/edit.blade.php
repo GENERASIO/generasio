@@ -1,0 +1,59 @@
+@extends('layouts.default')
+@section('content')
+    <div id="kt_app_content_container" class="app-container container-xxl">
+        <div class="card card-default">
+            <div class="card-header py-5">
+                <div class="d-flex justify-content-between align-items-center">
+                    <span id="card_title">
+                        <h4 class="m-0">{{ __('Update '.$pageTitle) }}</h4>
+                    </span>
+                </div>
+                <!--begin::Actions-->
+                <div class="d-flex align-items-center gap-2 gap-lg-3">
+                    <a href="{{ route($routePath.'.index') }}" class="btn btn-primary btn-sm float-right font-weight-bolder">
+                        <i class="fa fa-arrow-left"></i>Back
+                    </a>
+                </div>
+                <!--end::Actions-->
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ route($routePath.'.update', $user->id) }}"  role="form" enctype="multipart/form-data">
+                    {{ method_field('PATCH') }}
+                    @csrf
+
+                    <div class="form-floating mb-5">
+                        {{ Form::text('name', $user->name, ['class' => 'form-control' . ($errors->has('name') ? ' is-invalid' : ''), 'placeholder' => 'Name', 'required']) }}
+                        {{ Form::label('name') }}
+                        {!! $errors->first('name', '<p class="invalid-feedback">:message</p>') !!}
+                    </div>
+                    <div class="form-floating mb-5">
+                        {{ Form::text('username', $user->username, ['class' => 'form-control' . ($errors->has('username') ? ' is-invalid' : ''), 'placeholder' => 'Username', 'required']) }}
+                        {{ Form::label('username') }}
+                        {!! $errors->first('username', '<p class="invalid-feedback">:message</p>') !!}
+                    </div>
+                    <div class="form-floating mb-5">
+                        {{ Form::password('password', ['class' => 'form-control' . ($errors->has('password') ? ' is-invalid' : ''), 'placeholder' => 'Password']) }}
+                        {{ Form::label('Password') }}
+                        {!! $errors->first('password', '<p class="invalid-feedback">:message</p>') !!}
+                    </div>
+                    <div class="form-floating mb-5">
+                        {{ Form::text('email', $user->email, ['class' => 'form-control' . ($errors->has('email') ? ' is-invalid' : ''), 'placeholder' => 'Email', 'required']) }}
+                        {{ Form::label('email') }}
+                        {!! $errors->first('email', '<p class="invalid-feedback">:message</p>') !!}
+                    </div>
+                    <div class="form-floating mb-5">
+                        {!! Form::select('roles', $roles, $userRole, ['class' => 'form-select', 'required' => 'required']) !!}
+                        {{ Form::label('role') }}
+                    </div>
+                    <div class="form-floating mb-5">
+                        {!! Form::select('is_active', ['1' => 'Aktif', '0' => 'Non Aktif'], $user->is_active, ['class' => 'form-control', 'required' => 'required']) !!}
+                        {{ Form::label('is_active', 'Status') }}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+@endsection

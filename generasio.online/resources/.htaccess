@@ -1,0 +1,8 @@
+
+Options -Indexes
+
+RewriteEngine On
+
+# Jika tidak ada file yang dituju, beri status Forbidden (403)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ - [F]
